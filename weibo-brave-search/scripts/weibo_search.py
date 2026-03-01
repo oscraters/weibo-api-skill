@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fallback web search for Weibo content via Brave Search API."""
+"""Optional Brave-backed search for public Weibo pages."""
 
 from __future__ import annotations
 
@@ -14,7 +14,10 @@ import requests
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Search weibo.com using Brave Search API (fallback when Weibo API is unavailable)."
+        description=(
+            "Search weibo.com using Brave Search API. "
+            "Use only as an explicit fallback when official Weibo API access is unavailable."
+        )
     )
     parser.add_argument("keyword", help="Search keyword or phrase.")
     parser.add_argument(
@@ -40,7 +43,10 @@ def parse_args() -> argparse.Namespace:
 def perform_search(keyword: str, count: int, freshness: str) -> dict[str, Any]:
     api_key = os.getenv("BRAVE_SEARCH_API")
     if not api_key:
-        raise RuntimeError("Missing BRAVE_SEARCH_API environment variable.")
+        raise RuntimeError(
+            "Missing BRAVE_SEARCH_API environment variable. "
+            "Provide it through OpenClaw skill config or a secure deployment environment."
+        )
 
     response = requests.get(
         "https://api.search.brave.com/res/v1/web/search",
