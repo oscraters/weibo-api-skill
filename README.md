@@ -4,8 +4,8 @@ OpenClaw skill set for Weibo data collection with a separated optional Brave-bac
 
 ## Included Skills
 
-- [`weibo`](/home/noir/enna/skills/weibo/weibo/SKILL.md): official Weibo Open Platform OAuth and REST API wrapper.
-- [`weibo-brave-search`](/home/noir/enna/skills/weibo/weibo/weibo-brave-search/SKILL.md): optional fallback skill that searches `site:weibo.com` through Brave Search API.
+- [`weibo`](SKILL.md): official Weibo Open Platform OAuth and REST API wrapper.
+- [`weibo-brave-search`](weibo-brave-search/SKILL.md): optional fallback skill that searches `site:weibo.com` through Brave Search API.
 
 The split is intentional. The base Weibo skill should not publish or imply a second unrelated commercial credential dependency when the official API path is sufficient.
 

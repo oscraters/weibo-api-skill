@@ -44,16 +44,16 @@ Update skill metadata and docs so users and automated installers can see the run
 
 Actions:
 
-1. Add `metadata` to [`SKILL.md`](/home/noir/enna/skills/weibo/weibo/SKILL.md) with at least:
+1. Add `metadata` to [`SKILL.md`](SKILL.md) with at least:
    - `openclaw.skillKey`
    - `openclaw.requires.env` for the base required variables
    - `openclaw.primaryEnv` for the primary credential if the skill remains single-package
-2. Add a "Credentials and Secret Handling" section to [`SKILL.md`](/home/noir/enna/skills/weibo/weibo/SKILL.md) that separates:
+2. Add a "Credentials and Secret Handling" section to [`SKILL.md`](SKILL.md) that separates:
    - required non-secret config
    - required secrets
    - optional secrets
    - when each one is used
-3. Add the same disclosure to [`README.md`](/home/noir/enna/skills/weibo/weibo/README.md), since registry users may read the repo before or after install.
+3. Add the same disclosure to [`README.md`](README.md), since registry users may read the repo before or after install.
 4. State explicitly that `BRAVE_SEARCH_API` is only required for fallback search.
 
 Recommended disclosure table:
@@ -72,7 +72,7 @@ Do not make the fallback search credential part of the base skill contract if it
 
 Preferred path:
 
-1. Split [`scripts/weibo_search.py`](/home/noir/enna/skills/weibo/weibo/scripts/weibo_search.py) into a second skill, for example `weibo-brave-search`.
+1. Split [`scripts/weibo_search.py`](weibo-brave-search/scripts/weibo_search.py) into a second skill, for example `weibo-brave-search`.
 2. Keep the main `weibo` skill focused on the Weibo Open Platform flow.
 3. Publish the Brave-backed fallback as optional so the base skill does not appear to require two unrelated commercial credential sets.
 
@@ -108,7 +108,7 @@ Decision rule:
 
 Because this is an open-source wrapper around commercial API providers, warnings are appropriate when the implementation uses secret paths that fall outside OpenClaw's audited `SecretRef` model.
 
-Add explicit warnings in [`SKILL.md`](/home/noir/enna/skills/weibo/weibo/SKILL.md) and [`README.md`](/home/noir/enna/skills/weibo/weibo/README.md):
+Add explicit warnings in [`SKILL.md`](SKILL.md) and [`README.md`](README.md):
 
 1. `WEIBO_APP_SECRET`, `WEIBO_ACCESS_TOKEN`, and `BRAVE_SEARCH_API` are sensitive and must not be committed.
 2. If supplied through plain environment variables, those values are not covered by OpenClaw's `skills.entries.<skillKey>.apiKey` audit path.
@@ -126,8 +126,8 @@ The scripts should enforce the contract they advertise.
 
 Actions:
 
-1. Update [`scripts/weibo_cli.sh`](/home/noir/enna/skills/weibo/weibo/scripts/weibo_cli.sh) help text to label variables as `required`, `optional`, and `sensitive`.
-2. Update [`scripts/weibo_search.py`](/home/noir/enna/skills/weibo/weibo/scripts/weibo_search.py) docstring and CLI help to warn that the fallback depends on a separate Brave credential.
+1. Update [`scripts/weibo_cli.sh`](scripts/weibo_cli.sh) help text to label variables as `required`, `optional`, and `sensitive`.
+2. Update [`scripts/weibo_search.py`](weibo-brave-search/scripts/weibo_search.py) docstring and CLI help to warn that the fallback depends on a separate Brave credential.
 3. Add a guardrail message before fallback search execution if `BRAVE_SEARCH_API` is missing or if the user has not explicitly requested fallback behavior.
 4. Ensure examples never suggest hardcoding secrets into the command line when an env var or secure prompt is available.
 
@@ -159,7 +159,7 @@ The remediation is complete when all of the following are true:
 
 ## Immediate Next Changes
 
-1. Update [`SKILL.md`](/home/noir/enna/skills/weibo/weibo/SKILL.md) metadata and add a credential handling section.
-2. Expand [`README.md`](/home/noir/enna/skills/weibo/weibo/README.md) with deployment and warning guidance.
+1. Update [`SKILL.md`](SKILL.md) metadata and add a credential handling section.
+2. Expand [`README.md`](README.md) with deployment and warning guidance.
 3. Decide whether to split the Brave fallback before the next publish.
 4. Republish and run `openclaw secrets audit` against the final config shape used for installation.
